@@ -5,15 +5,51 @@ namespace Fiap.Web.Donation7.Controllers
 {
     public class ProdutoController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             // Lógica para obter a lista de produtos do banco de dados
             // SELECT * FROM Produtos
 
+            var produtos = ListarProdutosMock();
+
             // retornar a lista de produtos para a view
 
-            return View();
+            //ViewBag.Produtos = produtos;
+            //TempData["Produtos"] = produtos;
+            
+            return View(produtos);
         }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            // SELECT * FROM Produtos WHERE ProdutoId = id
+            var produto = ListarProdutosMock().FirstOrDefault(p => p.ProdutoId == id);
+
+            return View(produto);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(ProdutoModel produtoModel)
+        {
+
+            if ( string.IsNullOrEmpty(produtoModel.SugestaoTroca) )
+            {
+                ViewBag.ErrorMessage = "A sugestão de troca é obrigatória.";
+                return View(produtoModel);
+            } else {
+                // UPDATE Produtos SET NomeProduto = produtoModel.NomeProduto, CategoriaId = produtoModel.CategoriaId, Disponivel = produtoModel.Disponivel, DataExpiracao = produtoModel.DataExpiracao WHERE ProdutoId = produtoModel.ProdutoId
+                TempData["SuccessMessage"] = $"Produto {produtoModel.NomeProduto} alterado com sucesso";
+                return RedirectToAction(nameof(Index));
+            }            
+        }
+
+
+
+
 
 
         private List<ProdutoModel> ListarProdutosMock() {

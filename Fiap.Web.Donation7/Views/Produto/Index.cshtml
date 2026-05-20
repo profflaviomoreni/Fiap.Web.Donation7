@@ -1,37 +1,40 @@
-﻿<h1>Meus produtos</h1>
+﻿@model List<ProdutoModel>
 
+<h1>Meus produtos</h1>
+
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string ))
+{
+    <div class="alert alert-info">@TempData["SuccessMessage"]</div>
+}
 
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Ações</th>
+            <th data-field="id">Id</th>
+            <th data-field="name">Nome</th>
+            <th data-field="tipo">Categoria</th>
+            <th data-field="disponivel">Disponível</th>
+            <th data-field="dataexpiracao">Expiração</th>
+            <th class="actions" width="220">Ações</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Produto 1</td>
-            <td>Descrição</td>
-            <td>Valor</td>
-            <td> - </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Produto 1</td>
-            <td>Descrição</td>
-            <td>Valor</td>
-            <td> - </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Produto 1</td>
-            <td>Descrição</td>
-            <td>Valor</td>
-            <td> - </td>
-        </tr>
+
+        @foreach (var item in Model) // ViewBag.Produtos // (List<ProdutoModel>) TempData["Produtos"]
+        {
+            <tr>
+                <td data-field="id"> @item.ProdutoId</td>
+                <td data-field="name">@item.NomeProduto</td>
+                <td data-field="categoria">@item.CategoriaId</td>
+                <td data-field="disponivel">@item.Disponivel</td>
+                <td data-field="dataExpiracao">@item.DataExpiracao</td>
+                <td>
+                    <a href="#">Detalhe</a>
+                    <a href="/produto/edit/@item.ProdutoId">Editar</a>
+                    <a href="#">Excluir</a>
+                </td>
+            </tr>
+        }
+
     </tbody>
 </table>
