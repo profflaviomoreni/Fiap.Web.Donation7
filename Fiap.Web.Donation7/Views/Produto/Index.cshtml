@@ -22,18 +22,7 @@
 
         @foreach (var item in Model) // ViewBag.Produtos // (List<ProdutoModel>) TempData["Produtos"]
         {
-            <tr>
-                <td data-field="id"> @item.ProdutoId</td>
-                <td data-field="name">@item.NomeProduto</td>
-                <td data-field="categoria">@item.CategoriaId</td>
-                <td data-field="disponivel">@item.Disponivel</td>
-                <td data-field="dataExpiracao">@item.DataExpiracao</td>
-                <td>
-                    <a href="/produto/detalhe/@item.ProdutoId">Detalhe</a>
-                    <a href="/produto/edit/@item.ProdutoId">Editar</a>
-                    <a href="#">Excluir</a>
-                </td>
-            </tr>
+            <partial name="_ProdutoItem" model="item" />
         }
 
     </tbody>

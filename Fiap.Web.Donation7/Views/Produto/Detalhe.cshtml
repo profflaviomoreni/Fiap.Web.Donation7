@@ -2,6 +2,22 @@
 
 <h1>Detalhe do Produto</h1>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th data-field="id">Id</th>
+            <th data-field="name">Nome</th>
+            <th data-field="tipo">Categoria</th>
+            <th data-field="disponivel">Disponível</th>
+            <th data-field="dataexpiracao">Expiração</th>
+            <th class="actions" width="220">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <partial name="_ProdutoItem" model="Model" />
+    </tbody>
+</table>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -35,3 +51,7 @@
         </div>
     </div>
 </div>
+
+@section Footer{
+    <p>Fiap Aula Guilherme e Flavio</p>
+}
