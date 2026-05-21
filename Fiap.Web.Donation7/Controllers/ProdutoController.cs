@@ -48,6 +48,12 @@ namespace Fiap.Web.Donation7.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Detalhe(int id)
+        {
+            var produto = ListarProdutosMock().FirstOrDefault(p => p.ProdutoId == id);
+            return View(produto);
+        }
 
 
 
