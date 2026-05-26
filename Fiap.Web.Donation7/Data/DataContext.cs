@@ -9,6 +9,9 @@ namespace Fiap.Web.Donation7.Data
 
         public DbSet<CategoriaModel> Categorias { get; set; }
 
+        public DbSet<UsuarioModel> Usuarios { get; set; }
+
+
         public DataContext(DbContextOptions options) : base(options)
         {
         }
