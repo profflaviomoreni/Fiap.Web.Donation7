@@ -1,14 +1,13 @@
 ﻿@model ProdutoModel
 
-<h1>Editar Produto</h1>
+<h1>Novo Produto</h1>
 
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="well">
-                <form asp-controller="Produto" asp-action="Edit" method="post">
-                    <input type="hidden" asp-for="ProdutoId" />
+                <form asp-controller="Produto" asp-action="Create" method="post">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -68,7 +67,7 @@
                     </div>
 
                     <hr class="hr" />
-                    <input type="submit" value="Gravar Produto" class="btn btn-primary" />
+                    <input type="submit" value="Criar Produto" class="btn btn-primary" />
                 </form>
             </div>
         </div>

@@ -1,57 +1,40 @@
 ﻿@model ProdutoModel
 
-<h1>Detalhe do Produto</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th data-field="id">Id</th>
-            <th data-field="name">Nome</th>
-            <th data-field="tipo">Categoria</th>
-            <th data-field="disponivel">Disponível</th>
-            <th data-field="dataexpiracao">Expiração</th>
-            <th class="actions" width="220">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <partial name="_ProdutoItem" model="Model" />
-    </tbody>
-</table>
+<h1>Detalhes do Produto</h1>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="well">
-                    <div class="form-group">
-                        <label class="control-label" for="NomeProduto">Nome Produto:</label>
-                        <label class="control-label">@Model.NomeProduto</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Sugestão:</label>
-                        <label class="control-label" name="SugestaoTroca">@Model.SugestaoTroca</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="CategoriaId">CategoriaId</label>
-                        <label >@Model.CategoriaId</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="Disponivel">Disponivel</label>
-                        <input type="checkbox" data-val="true" data-val-required="The Disponivel field is required." id="Disponivel" name="Disponivel" value="true" @(Model.Disponivel ? "checked" : "") />
-                        <span class="text-danger field-validation-valid" data-valmsg-for="Disponivel" data-valmsg-replace="true"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="DataExpiracao">DataExpiracao</label>
-                        <label class="form-control" type="datetime" id="DataExpiracao" name="DataExpiracao" value="">@Model.DataExpiracao</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="" value="Voltar" class="btn btn-primary" />
-                    </div>
 
+                <dl class="row">
+                    <dt class="col-sm-3"><label asp-for="NomeProduto" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@Model.NomeProduto</dd>
+
+                    <dt class="col-sm-3"><label asp-for="Descricao" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@Model.Descricao</dd>
+
+                    <dt class="col-sm-3"><label asp-for="SugestaoTroca" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@Model.SugestaoTroca</dd>
+
+                    <dt class="col-sm-3"><label asp-for="Disponivel" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@(Model.Disponivel ? "Sim" : "Não")</dd>
+
+                    <dt class="col-sm-3"><label asp-for="Valor" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@(Model.Valor.HasValue ? Model.Valor.Value.ToString("C") : "-")</dd>
+
+                    <dt class="col-sm-3"><label asp-for="DataExpiracao" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@(Model.DataExpiracao.HasValue ? Model.DataExpiracao.Value.ToString("d") : "-")</dd>
+
+                    <dt class="col-sm-3"><label asp-for="CategoriaId" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@(Model.Categoria?.NomeCategoria ?? Model.CategoriaId?.ToString() ?? "-")</dd>
+
+                    <dt class="col-sm-3"><label asp-for="UsuarioId" class="col-form-label"></label></dt>
+                    <dd class="col-sm-9">@(Model.Usuario?.Nome ?? Model.UsuarioId?.ToString() ?? "-")</dd>
+                </dl>
+
+                <a asp-controller="Produto" asp-action="Index" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
     </div>
 </div>
-
-@section Footer{
-    <p>Fiap Aula Guilherme e Flavio</p>
-}

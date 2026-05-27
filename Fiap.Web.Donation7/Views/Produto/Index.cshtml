@@ -1,6 +1,9 @@
 ﻿@model List<ProdutoModel>
 
 <h1>Meus produtos</h1>
+<p class="toolbar">
+    <a asp-controller="Produto" asp-action="Create" class="create btn btn-dark">Novo Produto</a>
+</p>
 
 @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string ))
 {
@@ -20,7 +23,7 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model) // ViewBag.Produtos // (List<ProdutoModel>) TempData["Produtos"]
+        @foreach (var item in Model)
         {
             <partial name="_ProdutoItem" model="item" />
         }
