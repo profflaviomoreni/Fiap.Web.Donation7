@@ -2,6 +2,7 @@
 using Fiap.Web.Donation7.Models;
 using Fiap.Web.Donation7.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.Donation7.Controllers
 {
@@ -10,9 +11,12 @@ namespace Fiap.Web.Donation7.Controllers
 
         private readonly ProdutoRepository _produtoRepository;
 
+        private readonly CategoriaRepository _categoriaRepository;
+
         public ProdutoController(DataContext dataContext)
         {
             _produtoRepository = new ProdutoRepository(dataContext);
+            _categoriaRepository = new CategoriaRepository(dataContext);
         }
 
 
@@ -20,13 +24,16 @@ namespace Fiap.Web.Donation7.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var produtos = _produtoRepository.FindAll();
+            //var produtos = _produtoRepository.FindAllAvailableWithCategoriasAndUsuarios();
+            //var produtos = _produtoRepository.FindAllWithCategoriasAndUsuariosByName("iphone");
+            var produtos = _produtoRepository.FindAllWithCategoriasAndUsuarios();
             return View(produtos);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            CarregarCategorias();
             return View();
         }
 
@@ -39,6 +46,7 @@ namespace Fiap.Web.Donation7.Controllers
                 TempData["SuccessMessage"] = $"Produto {produtoModel.NomeProduto} cadastrado com sucesso";
                 return RedirectToAction(nameof(Index));
             } else {
+                CarregarCategorias();
                 return View(produtoModel);
             }
 
@@ -48,6 +56,7 @@ namespace Fiap.Web.Donation7.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            CarregarCategorias();
             var produto = _produtoRepository.FindById(id);
             return View(produto);
         }
@@ -64,8 +73,18 @@ namespace Fiap.Web.Donation7.Controllers
             }
             else
             {
+                CarregarCategorias();
                 return View(produtoModel);
             }
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            _produtoRepository.Delete(id);
+            TempData["SuccessMessage"] = $"Produto removido com sucesso";
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -78,6 +97,13 @@ namespace Fiap.Web.Donation7.Controllers
         }
 
 
+
+        private void CarregarCategorias()
+        {
+            var categorias = _categoriaRepository.FindAll();
+            var selectCategorias = new SelectList(categorias, "CategoriaId", "NomeCategoria");
+            ViewBag.Categorias = selectCategorias;
+        }
 
     }
 }
