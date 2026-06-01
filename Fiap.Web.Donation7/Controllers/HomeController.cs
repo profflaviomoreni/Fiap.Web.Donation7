@@ -1,4 +1,6 @@
+using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
+using Fiap.Web.Donation7.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,9 +8,21 @@ namespace Fiap.Web.Donation7.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly int UsuarioLogado = 1; // Simulando um usuário logado com ID 1
+
+        private readonly ProdutoRepository _produtoRepository;
+
+        public HomeController(DataContext dataContext)
+        {
+            _produtoRepository = new ProdutoRepository(dataContext);
+        }
+
+
         public IActionResult Index()
         {
-            return View();
+            var produtos = _produtoRepository.FindAllAvailablesForChangeWithCategoriaAndUsuario(UsuarioLogado);
+            return View(produtos);
         }
 
         public IActionResult Privacy()
