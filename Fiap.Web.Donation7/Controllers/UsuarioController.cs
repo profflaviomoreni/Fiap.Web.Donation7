@@ -1,11 +1,14 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Fiap.Web.Donation7.Controllers;
+using Fiap.Web.Donation7.Controllers.Filters;
+using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
 using Fiap.Web.Donation7.Repository;
-using Fiap.Web.Donation7.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-public class UsuarioController : Controller
+[Auth]
+public class UsuarioController : BaseController
 {
     private readonly UsuarioRepository _usuarioRepository;
 

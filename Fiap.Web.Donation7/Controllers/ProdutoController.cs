@@ -1,4 +1,5 @@
-﻿using Fiap.Web.Donation7.Data;
+﻿using Fiap.Web.Donation7.Controllers.Filters;
+using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
 using Fiap.Web.Donation7.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.Donation7.Controllers
 {
-    public class ProdutoController : Controller
+
+    [Auth]
+    public class ProdutoController : BaseController
     {
 
         private readonly ProdutoRepository _produtoRepository;
@@ -24,6 +27,7 @@ namespace Fiap.Web.Donation7.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             //var produtos = _produtoRepository.FindAllAvailableWithCategoriasAndUsuarios();
             //var produtos = _produtoRepository.FindAllWithCategoriasAndUsuariosByName("iphone");
             var produtos = _produtoRepository.FindAllWithCategoriasAndUsuarios();

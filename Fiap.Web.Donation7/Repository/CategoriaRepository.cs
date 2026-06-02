@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.Donation7.Repository
 {
@@ -17,13 +18,13 @@ namespace Fiap.Web.Donation7.Repository
         public List<CategoriaModel> FindAll()
         {
             // SELECT * FROM Categoria
-            var categorias = _dataContext.Categorias.ToList() ?? new List<CategoriaModel>();
+            var categorias = _dataContext.Categorias.AsNoTracking().ToList() ?? new List<CategoriaModel>();
             return categorias;
         }
 
         public CategoriaModel FindById(int id)
         {
-            var categoria = _dataContext.Categorias.Find(id);
+            var categoria = _dataContext.Categorias.AsNoTracking().FirstOrDefault(c => c.CategoriaId == id);
             return categoria;
         }
 

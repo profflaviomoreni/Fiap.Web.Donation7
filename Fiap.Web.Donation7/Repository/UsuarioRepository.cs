@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.Donation7.Repository
 {
@@ -17,13 +18,23 @@ namespace Fiap.Web.Donation7.Repository
         public List<UsuarioModel> FindAll()
         {
             // SELECT * FROM Usuario
-            var usuarios = _dataContext.Usuarios.ToList() ?? new List<UsuarioModel>();
+            var usuarios = _dataContext.Usuarios.AsNoTracking().ToList() ?? new List<UsuarioModel>();
             return usuarios;
         }
 
         public UsuarioModel FindById(int id)
         {
-            var usuario = _dataContext.Usuarios.Find(id);
+            var usuario = _dataContext.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == id);
+            return usuario;
+        }
+
+
+        public UsuarioModel FindByEmailAndSenha(string email, string senha)
+        {
+            var usuario = _dataContext.Usuarios.AsNoTracking()
+                                .FirstOrDefault(u => 
+                                    u.Email == email && 
+                                    u.Senha == senha);
             return usuario;
         }
 

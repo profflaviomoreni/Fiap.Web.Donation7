@@ -1,9 +1,12 @@
-﻿using Fiap.Web.Donation7.Models;
+﻿using Fiap.Web.Donation7.Controllers.Filters;
+using Fiap.Web.Donation7.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.Donation7.Controllers
 {
-    public class ClienteController : Controller
+
+    [Auth]
+    public class ClienteController : BaseController
     {
 
         [HttpGet]

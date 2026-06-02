@@ -1,4 +1,5 @@
-﻿using Fiap.Web.Donation7.Data;
+﻿using Fiap.Web.Donation7.Controllers.Filters;
+using Fiap.Web.Donation7.Data;
 using Fiap.Web.Donation7.Models;
 using Fiap.Web.Donation7.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -6,9 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.Donation7.Controllers
 {
-    public class TrocaController : Controller
+
+    [Auth]
+    public class TrocaController : BaseController
     {
-        private readonly int UsuarioLogado = 1; // Simulando um usuário logado com ID 1
 
         private readonly ProdutoRepository _produtoRepository;
         private readonly TrocaRepository _trocaRepository;
@@ -66,13 +68,21 @@ namespace Fiap.Web.Donation7.Controllers
                     throw new Exception("Não é possível escolher um produto que você mesmo cadastrou.");
                 }
 
+                // Clear navigation properties so EF Core does not try to track duplicate Categoria/Usuario instances
+                produtoEscolhido.Categoria = null;
+                produtoEscolhido.Usuario = null;
                 produtoEscolhido.Disponivel = false;
                 _produtoRepository.Update(produtoEscolhido);
 
+                produtoMeu.Categoria = null;
+                produtoMeu.Usuario = null;
                 produtoMeu.Disponivel = false;
                 _produtoRepository.Update(produtoMeu);
 
 
+                // Ensure trocaModel does not carry Produto navigation instances (only FK ids)
+                trocaModel.ProdutoMeu = null;
+                trocaModel.ProdutoEscolhido = null;
                 trocaModel.TrocaStatus = TrocaStatus.Iniciado;
                 _trocaRepository.Insert(trocaModel);
 

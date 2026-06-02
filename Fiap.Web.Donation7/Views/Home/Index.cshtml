@@ -24,7 +24,10 @@
                     <p class="card-text">@item.Valor</p>
                     <p class="card-text">@item.Categoria.NomeCategoria</p>
                     <p class="card-text">@item.Usuario.Nome</p>
-                    <a asp-controller="Troca" asp-action="Index" asp-route-id="@item.ProdutoId" class="btn btn-primary">Trocar</a>
+                    @if( Context.Session.GetInt32("UsuarioId") != null && Context.Session.GetInt32("UsuarioId") > 0 )
+                    {
+                        <a asp-controller="Troca" asp-action="Index" asp-route-id="@item.ProdutoId" class="btn btn-primary">Trocar</a>
+                    }
                 </div>
             </div>
         }

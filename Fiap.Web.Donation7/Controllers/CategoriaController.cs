@@ -1,11 +1,14 @@
 
+using Fiap.Web.Donation7.Controllers;
+using Fiap.Web.Donation7.Controllers.Filters;
+using Fiap.Web.Donation7.Data;
+using Fiap.Web.Donation7.Models;
+using Fiap.Web.Donation7.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Fiap.Web.Donation7.Models;
-using Fiap.Web.Donation7.Data;
-using Fiap.Web.Donation7.Repository;
 
-public class CategoriaController : Controller
+[Auth]
+public class CategoriaController : BaseController
 {
 
     private readonly CategoriaRepository _categoriaRepository;
@@ -38,6 +41,7 @@ public class CategoriaController : Controller
         return View(categoriamodel);
     }
 
+    
     public IActionResult Create()
     {
         return View();

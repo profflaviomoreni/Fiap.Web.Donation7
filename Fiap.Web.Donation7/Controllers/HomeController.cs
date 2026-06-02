@@ -6,10 +6,8 @@ using System.Diagnostics;
 
 namespace Fiap.Web.Donation7.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-
-        private readonly int UsuarioLogado = 1; // Simulando um usuário logado com ID 1
 
         private readonly ProdutoRepository _produtoRepository;
 
